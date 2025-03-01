@@ -1,7 +1,7 @@
 {
   "extends": "./tsconfig.base.json",
-  "compilerOptions": {
-    "declaration": true
-  },
+  "compilerOptions": {},
+  "include": ["docs/.vitepress/config.mts"],
+  "exclude": ["node_modules", "dist"],
   "references": []
 }

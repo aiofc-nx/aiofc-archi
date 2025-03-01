@@ -4,16 +4,6 @@ import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
 import globals from 'globals';
 
 export default [
-  {
-    files: ['**/*.json'],
-    // Override or add rules here
-    rules: {
-      'prettier/prettier': ['off', { endOfLine: 'auto' }],
-    },
-    languageOptions: {
-      parser: await import('jsonc-eslint-parser'),
-    },
-  },
   // Any other config imports go at the top
   ...nx.configs['flat/base'],
   ...nx.configs['flat/typescript'],
@@ -43,7 +33,6 @@ export default [
           ],
         },
       ],
-      'prettier/prettier': ['error', { endOfLine: 'auto' }],
     },
   },
   {
@@ -75,6 +64,12 @@ export default [
           'newlines-between': 'always',
         },
       ],
+    },
+  },
+  {
+    files: ['**/*.json'],
+    rules: {
+      'prettier/prettier': ['off', { endOfLine: 'auto' }],
     },
   },
   {

@@ -1,0 +1,57 @@
+{
+  "name": "coding-nestjs",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/nx/coding-nestjs/src",
+  "projectType": "library",
+  "release": {
+    "version": {
+      "generatorOptions": {
+        "packageRoot": "dist/{projectRoot}",
+        "currentVersionResolver": "git-tag",
+        "fallbackCurrentVersionResolver": "disk"
+      }
+    }
+  },
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:swc",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/packages/nx/coding-nestjs",
+        "main": "packages/nx/coding-nestjs/src/index.ts",
+        "tsConfig": "packages/nx/coding-nestjs/tsconfig.lib.json",
+        "assets": [
+          "packages/nx/coding-nestjs/*.md",
+          {
+            "input": "./packages/nx/coding-nestjs/src",
+            "glob": "**/!(*.ts)",
+            "output": "./src"
+          },
+          {
+            "input": "./packages/nx/coding-nestjs/src",
+            "glob": "**/*.d.ts",
+            "output": "./src"
+          },
+          {
+            "input": "./packages/nx/coding-nestjs",
+            "glob": "generators.json",
+            "output": "."
+          },
+          {
+            "input": "./packages/nx/coding-nestjs",
+            "glob": "executors.json",
+            "output": "."
+          }
+        ]
+      }
+    },
+    "nx-release-publish": {
+      "options": {
+        "packageRoot": "dist/{projectRoot}"
+      }
+    }
+  }
+}

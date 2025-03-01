@@ -1,20 +1,40 @@
 {
   "compilerOptions": {
     "target": "ES2021",
-    "importHelpers": true,
     "module": "commonjs",
-    "moduleResolution": "node",
     "outDir": "build",
-    "skipLibCheck": true,
     "types": ["node", "jest"],
     "lib": ["ES2021"],
     "declaration": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "removeComments": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "moduleResolution": "node",
     "resolveJsonModule": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "skipDefaultLibCheck": true,
+    "strictPropertyInitialization": false,
     "baseUrl": ".",
     "rootDir": ".",
     "allowJs": true,
     "paths": {
-      "@aiofc/coding": ["packages/nx/coding/src/index.ts"]
+      "@aiofc/coding": ["packages/nx/coding-nestjs/src/index.ts"],
+      "@aiofc/config": ["packages/infrastructures/config/src/index.ts"],
+      "@aiofc/constants": ["packages/infrastructures/constants/src/index.ts"],
+      "@aiofc/crypto": ["packages/infrastructures/crypto/src/index.ts"],
+      "@aiofc/fastify-server": [
+        "packages/infrastructures/fastify-server/src/index.ts"
+      ],
+      "@aiofc/logger": ["packages/infrastructures/logger/src/index.ts"],
+      "@aiofc/rest": ["packages/infrastructures/rest/src/index.ts"],
+      "@aiofc/typings": ["packages/infrastructures/typings/src/index.ts"],
+      "@aiofc/utils": ["packages/infrastructures/utils/src/index.ts"]
     }
   }
 }
