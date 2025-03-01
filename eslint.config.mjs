@@ -15,6 +15,7 @@ export default [
       '**/eslint.config.mjs',
       '**/webpack.config.js',
       '**/package.json',
+      '.vscode',
     ],
   },
   {

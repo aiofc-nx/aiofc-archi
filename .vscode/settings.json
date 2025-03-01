@@ -3,9 +3,8 @@
     "source.fixAll.eslint": "explicit"
   },
   "editor.formatOnSave": true,
-  "eslint.validate": [
-    "json"
-  ],
+
+  "eslint.validate": ["json"],
   "nxConsole.nxWorkspacePath": "",
   "typescript.preferences.autoImportFileExcludePatterns": [
     "@remix-run/server-runtime",

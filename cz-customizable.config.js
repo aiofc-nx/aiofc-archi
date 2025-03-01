@@ -32,6 +32,7 @@ module.exports = {
     { name: 'packages' },
     { name: 'apps & packages' },
     { name: 'docs' },
+    { name: 'tools' },
     { name: 'monorepo' },
   ],
   // allowTicketNumber: false,
