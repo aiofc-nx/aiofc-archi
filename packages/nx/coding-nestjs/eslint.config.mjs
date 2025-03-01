@@ -11,6 +11,7 @@ export default [
           ignoredFiles: ['{projectRoot}/eslint.config.{js,cjs,mjs}'],
         },
       ],
+      'prettier/prettier': ['off', { endOfLine: 'auto' }],
     },
     languageOptions: {
       parser: await import('jsonc-eslint-parser'),

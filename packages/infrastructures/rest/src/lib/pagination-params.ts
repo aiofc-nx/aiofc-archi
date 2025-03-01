@@ -15,7 +15,7 @@ export class PaginationParams {
   @Transform(({ value: val }) => (val ? Number.parseInt(val) : 1), {
     toClassOnly: true,
   })
-  public readonly current: number = 1;
+  readonly current: number = 1;
 
   @ApiProperty({
     description: 'Number of items per page',
@@ -31,5 +31,5 @@ export class PaginationParams {
   @Transform(({ value: val }) => (val ? Number.parseInt(val) : 10), {
     toClassOnly: true,
   })
-  public readonly size: number = 10;
+  readonly size: number = 10;
 }

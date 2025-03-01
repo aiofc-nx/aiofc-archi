@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IncomingMessage, ServerResponse } from 'node:http';
 
 import {

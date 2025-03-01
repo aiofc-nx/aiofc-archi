@@ -33,5 +33,5 @@ export async function fastifyRegisterPlugins(
   // 注册压缩
   await app.register(require('@fastify/compress'));
   // TODO: 注册CSRF
-  await app.register(require('@fastify/csrf-protection') as any);
+  await app.register(require('@fastify/csrf-protection'));
 }

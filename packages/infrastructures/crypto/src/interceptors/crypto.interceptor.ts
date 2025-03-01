@@ -7,6 +7,7 @@ import {
   Logger,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
+import { FastifyRequest } from 'fastify';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -32,8 +33,8 @@ export class CryptoInterceptor implements NestInterceptor {
     private readonly cryptoService: CryptoService
   ) {}
 
-  intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
-    const request = context.switchToHttp().getRequest();
+  intercept(context: ExecutionContext, next: CallHandler): Observable<unknown> {
+    const request: FastifyRequest = context.switchToHttp().getRequest();
     const cryptoConfig = this.getCryptoConfig(context);
 
     // 如果没有加密配置，直接返回
@@ -48,7 +49,7 @@ export class CryptoInterceptor implements NestInterceptor {
 
     // 处理响应加密
     return next.handle().pipe(
-      map((data) => {
+      map((data: unknown) => {
         if (!this.shouldEncrypt(cryptoConfig.direction)) {
           return data;
         }
@@ -135,7 +136,10 @@ export class CryptoInterceptor implements NestInterceptor {
   /**
    * 解密请求
    */
-  private decryptRequest(request: any, config: Partial<CryptoConfig>): void {
+  private decryptRequest(
+    request: FastifyRequest,
+    config: Partial<CryptoConfig>
+  ): void {
     try {
       // 如果请求体为空，则不进行解密
       if (!request.body) {
@@ -143,10 +147,18 @@ export class CryptoInterceptor implements NestInterceptor {
         return;
       }
 
-      request.body = this.cryptoService.decrypt(request.body, config);
+      // 确保 request.body 是字符串
+      const bodyString =
+        typeof request.body === 'string'
+          ? request.body
+          : JSON.stringify(request.body); // 将对象序列化为字符串
+
+      request.body = this.cryptoService.decrypt(bodyString, config);
       this.logger.debug(`Request body decrypted: ${request.body}`);
-    } catch (error: any) {
-      this.logger.error(`Failed to decrypt request body: ${error.message}`);
+    } catch (error: unknown) {
+      this.logger.error(
+        `Failed to decrypt request body: ${(error as Error).message}`
+      );
       throw error;
     }
   }
@@ -155,9 +167,9 @@ export class CryptoInterceptor implements NestInterceptor {
    * 加密响应
    */
   private encryptResponse(
-    data: any,
+    data: unknown,
     config: Partial<CryptoConfig>
-  ): string | ApiRes<any> {
+  ): string | ApiRes<unknown> {
     try {
       // 如果是 ApiRes 格式，只加密 data 字段
       if (this.isApiResponse(data)) {
@@ -181,8 +193,10 @@ export class CryptoInterceptor implements NestInterceptor {
         )}`
       );
       return encrypted;
-    } catch (error: any) {
-      this.logger.error(`Failed to encrypt response: ${error.message}`);
+    } catch (error: unknown) {
+      this.logger.error(
+        `Failed to encrypt response: ${(error as Error).message}`
+      );
       throw error;
     }
   }
@@ -190,9 +204,9 @@ export class CryptoInterceptor implements NestInterceptor {
   /**
    * 判断是否为 ApiRes 格式
    */
-  private isApiResponse(data: any): data is ApiRes<any> {
+  private isApiResponse(data: unknown): data is ApiRes<unknown> {
     return (
-      data &&
+      data !== null &&
       typeof data === 'object' &&
       'code' in data &&
       'message' in data &&

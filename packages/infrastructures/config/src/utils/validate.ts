@@ -6,7 +6,25 @@ import * as yaml from 'js-yaml';
 
 import { allZodSchema } from '../zod-schema';
 
-let cachedConfig: any = null;
+// 定义接口表示配置的结构
+interface AppConfig {
+  appName: string;
+  version: string;
+  // 其他属性...
+}
+
+interface LoggerConfig {
+  level: string;
+  // 其他属性...
+}
+
+interface ValidatedConfig {
+  app: AppConfig;
+  logger: LoggerConfig;
+  // 其他配置...
+}
+
+let cachedConfig: ValidatedConfig | null = null; // 使用具体类型
 
 /**
  * 加载配置文件
@@ -23,10 +41,10 @@ let cachedConfig: any = null;
  * const config = loadConfig('path/to/config.yaml');
  * ```
  */
-export function loadConfig(filePath: string) {
+export function loadConfig(filePath: string): ValidatedConfig {
   if (!cachedConfig) {
     const fileContent = fs.readFileSync(filePath, 'utf8');
-    cachedConfig = yaml.load(fileContent);
+    cachedConfig = yaml.load(fileContent) as ValidatedConfig; // 确保类型正确
   }
   return cachedConfig;
 }

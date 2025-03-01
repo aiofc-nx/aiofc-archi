@@ -1,3 +1,5 @@
+import { IncomingMessage } from 'node:http';
+
 import {
   ConfigKeyPaths,
   ConfigService,
@@ -6,7 +8,7 @@ import {
   getSwaggerConfig,
 } from '@aiofc/config';
 import { Logger } from '@aiofc/logger';
-import { RedisUtility } from '@aiofc/redis';
+import { RedisUtility } from '@aiofc/utils';
 import { generateRandomId } from '@aiofc/utils';
 import { RequestMethod, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
@@ -27,14 +29,18 @@ function buildFastifyAdapter(): FastifyAdapter {
     // 给每一个请求分配一个ID，用于追踪请求：
     // 1、如果请求已经有了'x-request-id'
     // 2、否则生成一个随机ID
-    genReqId: (req: { headers: { [x: string]: any } }) => {
+    genReqId: (req: IncomingMessage) => {
       const requestId = req.headers[REQUEST_ID_HEADER];
-      return requestId || generateRandomId();
+      // 确保 requestId 是字符串
+      return Array.isArray(requestId)
+        ? requestId[0]
+        : requestId || generateRandomId();
     },
     bodyLimit: 10_485_760,
   });
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function bootstrap(module: any) {
   // 创建应用
   const fastifyAdapter = buildFastifyAdapter();

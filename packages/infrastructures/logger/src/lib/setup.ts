@@ -5,6 +5,13 @@ import { ClsService, ClsStore } from 'nestjs-cls';
 
 import { LoggerModule } from './logger.module';
 
+// 定义一个接口来表示 val 的结构
+interface LogValue {
+  responseTime?: number; // 根据实际情况添加属性
+  err?: Error; // 假设 val 可能包含错误信息
+  // 其他属性...
+}
+
 /**
  * 设置日志模块的配置函数
  *
@@ -57,7 +64,7 @@ export function setupLoggerModule<ClsType extends ClsStore>(
           customSuccessObject: (
             req: IncomingMessage,
             _res: ServerResponse,
-            val: any
+            val: LogValue
           ) => {
             return {
               reqId: req.id,
@@ -76,7 +83,7 @@ export function setupLoggerModule<ClsType extends ClsStore>(
             _req: IncomingMessage,
             res: ServerResponse,
             _error: Error,
-            val: any
+            val: LogValue
           ) => {
             return {
               statusMessage: res.statusMessage,

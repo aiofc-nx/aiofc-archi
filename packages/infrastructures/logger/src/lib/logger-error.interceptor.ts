@@ -11,6 +11,7 @@ export class LoggerErrorInterceptor implements NestInterceptor {
   intercept(
     context: ExecutionContext,
     next: CallHandler
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ): Observable<any> | Promise<Observable<any>> {
     return next.handle().pipe(
       catchError((error) => {

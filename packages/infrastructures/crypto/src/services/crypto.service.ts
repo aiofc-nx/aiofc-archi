@@ -41,6 +41,7 @@ export class CryptoService {
    * @param config 加密配置
    * @returns 加密后的数据
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   encrypt(data: any, config?: Partial<CryptoConfig>): string {
     const method = config?.method || this.moduleOptions.defaultMethod;
     this.logger.debug(`Encrypting data with method: ${method}`);
@@ -62,7 +63,7 @@ export class CryptoService {
    * @param config 解密配置
    * @returns 解密后的数据
    */
-  decrypt(encryptedData: string, config?: Partial<CryptoConfig>): any {
+  decrypt(encryptedData: string, config?: Partial<CryptoConfig>): string {
     const method = config?.method || this.moduleOptions.defaultMethod;
     this.logger.debug(`Decrypting data with method: ${method}`);
 
@@ -80,7 +81,7 @@ export class CryptoService {
   /**
    * 序列化数据
    */
-  private serializeData(data: any): string {
+  private serializeData(data: unknown): string {
     if (typeof data === 'string') {
       return data;
     }
@@ -90,7 +91,7 @@ export class CryptoService {
   /**
    * 反序列化数据
    */
-  private deserializeData(data: string): any {
+  private deserializeData(data: string): string {
     try {
       return JSON.parse(data);
     } catch {
