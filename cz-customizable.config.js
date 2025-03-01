@@ -26,7 +26,14 @@ module.exports = {
     { value: 'test', name: '🏁 test: 测试' },
     { value: 'release', name: '🏹 release: 发版' },
   ],
-
+  // 自定义范围
+  scopes: [
+    { name: 'apps' },
+    { name: 'packages' },
+    { name: 'apps & packages' },
+    { name: 'docs' },
+    { name: 'monorepo' },
+  ],
   // allowTicketNumber: false,
   isTicketNumberRequired: false,
   ticketNumberPrefix: 'TICKET-',

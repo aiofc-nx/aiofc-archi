@@ -1,0 +1,9 @@
+{
+  "generators": {
+    "coding": {
+      "factory": "./src/generators/nestjs/library",
+      "schema": "./src/generators/nestjs/schema.json",
+      "description": "aiofc-archi"
+    }
+  }
+}
