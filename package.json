@@ -1,18 +1,52 @@
 {
-  "name": "@aiofc-archi/source",
+  "name": "@aiofc/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "packageManager": "pnpm@8.15.0",
+  "volta": {
+    "node": "20.18.1"
+  },
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "prepare": "husky install",
+    "commit": "cz",
+    "clean": "gulp clean:bundle",
+    "format": "prettier --write \"**/src/**/*.ts\"",
+    "lint": "eslint \"apps/**/*.ts\" \"packages/**/*.ts\" --fix",
+    "doc": "typedoc --options typedoc.json && vitepress dev docs",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs",
+    "docs:typedoc": "typedoc --options typedoc.json",
+    "docs:typedoc:watch": "typedoc --watch"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-customizable"
+    },
+    "cz-customizable": {
+      "config": "cz-customizable.config.js"
+    }
+  },
   "private": true,
-  "dependencies": {},
   "devDependencies": {
+    "@commitlint/cli": "^19.7.1",
+    "@commitlint/config-conventional": "^19.7.1",
+    "@commitlint/types": "^19.5.0",
     "@nx/js": "20.4.6",
     "@swc-node/register": "~1.9.1",
     "@swc/core": "~1.5.7",
     "@swc/helpers": "~0.5.11",
+    "commitizen": "^4.3.1",
+    "cz-customizable": "^7.4.0",
+    "husky": "^8.0.0",
     "nx": "20.4.6",
     "prettier": "^2.6.2",
     "tslib": "^2.3.0",
-    "typescript": "~5.7.2"
+    "typedoc": "^0.27.9",
+    "typedoc-plugin-markdown": "^4.4.2",
+    "typedoc-vitepress-theme": "^1.1.2",
+    "typescript": "~5.7.2",
+    "vitepress": "^1.6.3"
   }
 }
