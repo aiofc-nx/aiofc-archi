@@ -3,6 +3,20 @@
   "$schema": "node_modules/nx/schemas/project-schema.json",
   "includedScripts": [],
   "targets": {
+    "docs": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "vitepress dev docs"
+      },
+      "local-registry": {
+        "executor": "@nx/js:verdaccio",
+        "options": {
+          "port": 4873,
+          "config": ".verdaccio/config.yml",
+          "storage": "tmp/local-registry/storage"
+        }
+      }
+    },
     "local-registry": {
       "executor": "@nx/js:verdaccio",
       "options": {
